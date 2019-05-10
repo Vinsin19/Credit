@@ -36,10 +36,10 @@
       <property name="checkWriteOperations" value="false"></property>
    </bean>
     
-   <bean id="authenticateServiceBean" class="com.charan.spring.hibernate.service.AuthService">
+   <bean id="authServiceBean" class="com.charan.spring.hibernate.service.AuthService">
       <property name="hibernateTemplate" ref="hibernateTemplateBean" />
    </bean>
-    <bean id="authenticateServiceBean1" class="com.charan.spring.hibernate.service.AuthUser">
+    <bean id="authServiceBean1" class="com.charan.spring.hibernate.service.AuthUser">
       <property name="hibernateTemplate" ref="hibernateTemplateBean" />
    </bean>
 </beans>

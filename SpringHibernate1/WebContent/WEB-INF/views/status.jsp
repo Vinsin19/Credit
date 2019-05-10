@@ -10,9 +10,12 @@
 <body>
 <table border=2px>
 <tr><td>UID</td><td>${uid} </td></tr>
-<tr><td>Application ID</td><td>  </td></tr>
-<tr><td>Date and Time</td><td>  </td></tr>
-<tr><td>Status</td><td> ${stat} </td></tr>
+<tr><td>Application ID</td><td> ${appid} </td></tr>
+<tr><td>Date and Time</td><td>${appdt}</td></tr>
+<tr><td>Status</td><td> ${appst} </td></tr>
 </table>
+<form action="Dashboard" method="POST">
+<button id="Dash" type="Submit" class="btn btn-primary">Dashboard</button>
+</form>
 </body>
 </html>

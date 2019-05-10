@@ -5,10 +5,12 @@ import java.io.Serializable;
 
 public class customer implements Serializable {
  
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
-	private int age;
-    private long contact;
-    private String uid, password, first_name, last_name, gender, sec_que, sec_ans;
+    private String uid, password, first_name, last_name, gender, sec_que, sec_ans,age,contact;
  
     public int getId() {
 		return id;
@@ -58,19 +60,19 @@ public class customer implements Serializable {
         this.gender = gender;
     }
     
-    public int getage() {
+    public String getage() {
         return age;
     }
  
-    public void setage(int age) {
+    public void setage(String age) {
         this.age = age;
     }
     
-    public long getcontact() {
+    public String getcontact() {
         return contact;
     }
  
-    public void setcontact(long contact) {
+    public void setcontact(String contact) {
         this.contact = contact;
     }
     

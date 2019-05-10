@@ -7,6 +7,7 @@ import java.time.*;
 import org.hibernate.*; 
 import org.apache.log4j.Logger;
 import org.hibernate.query.Query;
+import org.hibernate.query.NativeQuery;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -60,15 +61,16 @@ public class AuthService {
     }
     
     @SuppressWarnings({ "deprecation", "unchecked" })
-	public boolean findExUser(String fname, String lname, String gender, int age, long contact, String uid, String pwd, String sq, String sa) {
+	public boolean findExUser(String fname, String lname, String uid, String sq, String sa) {
         log.info("Checking the existing user in the database");
         boolean isValidUser = false;
-        String sqlQuery = "from customer u where u.first_name=? and u.last_name=? and u.gender=? and u.age=? and u.contact=? and u.uid=? and u.password=? and u.sec_que=? and u.sec_ans=?";
-        // String sqlQuery = "from customer c";
-         System.out.println("In the authentication service...user entered data " + fname + " " + lname+ " " + gender+ " " + age + " " + contact + " " + uid + " " + pwd + " " + sq + " " + sa);
+       // String sqlQuery = "from customer u where u.first_name=? and u.last_name=? and u.uid=? and u.sec_que=? and u.sec_ans=?";
+         String sqlQuery = "from customer c";
+         System.out.println("In the authentication service...user entered data " + fname + " " + lname+ " " + uid + " " + sq + " " + sa);
          
          try {
-             List<customer> userObj = (List) hibernateTemplate.find(sqlQuery,fname,lname,gender,age,contact,uid,pwd,sq,sa);
+            // List<customer> userObj = (List) hibernateTemplate.find(sqlQuery,fname,lname,uid,sq,sa);
+        	 List<customer> userObj = (List) hibernateTemplate.find(sqlQuery);
              
          	// List<customer> userObj = (List) hibernateTemplate.find(sqlQuery);
             
@@ -76,21 +78,51 @@ public class AuthService {
         System.out.println(userObj);  	 
              
              if(userObj != null && userObj.size() > 0) {
+            	 System.out.println("Entering if part...");
                  isValidUser = true;       
-                 
-                 status st = new status();
+                 Session session = (Session) hibernateTemplate.getSessionFactory().openSession();
+                 Transaction tx = session.beginTransaction();
+                 String DateTime = sdf.format(dt);
+                 String acp = "Accepted";
+                 String sql="Update status set app_id= "+ "'"+ DateTime + "'"  + ", app_dt= "+ "'"+ dt.toString() + "'"  + ", stat= "+ "'" + acp + "'" + " where uid= " + "'" + uid + "'";
+                 NativeQuery qry =  session.createNativeQuery(sql);
+                 qry.executeUpdate();
+                 tx.commit();
+
+                 /*status st = new status();
                  st.setuid(uid);
                  String DateTime = sdf.format(dt);
                  st.setapp_id(DateTime);
                  st.setapp_dt(dt.toString());
-                 st.setstat("Submitted");
+                 st.setstat("Accepted");
                  
-                 hibernateTemplate.save(st);
+                 hibernateTemplate.save(st);*/
                  
+             }
+             
+             else{
+            	 System.out.println("Entering else part...");
+            	 Session session = (Session) hibernateTemplate.getSessionFactory().openSession();
+            	 Transaction tx = session.beginTransaction();
+            	 String DateTime = sdf.format(dt);
+                 String rej = "Rejected";
+                 String sql="Update status set app_id= "+ "'"+ DateTime + "'"  + ", app_dt= "+ "'"+ dt.toString() + "'"  + ", stat= "+ "'" + rej + "'" + " where uid= " + "'" + uid + "'";
+                 NativeQuery qry =  session.createNativeQuery(sql);
+                 qry.executeUpdate();
+                 tx.commit();
+            	 
+            	 /*status st = new status();
+                 st.setuid(uid);
+                 String DateTime = sdf.format(dt);
+                 st.setapp_id(DateTime);
+                 st.setapp_dt(dt.toString());
+                 st.setstat("Rejected");
+                 
+                 hibernateTemplate.save(st);*/
              }
          } catch(Exception e) {
              isValidUser = false;
-             log.error("An error occurred while fetching the user details from the database", e);    
+             System.out.println("An error occurred while fetching the user details from the database"+ e);    
          }
          return isValidUser;
     }
@@ -99,37 +131,39 @@ public class AuthService {
     {
        Session session = hibernateTemplate.getSessionFactory().openSession();
        String sqlQuery1="from status where uid=? order by app_id desc";
-       session.beginTransaction();
-       Query q=session.createQuery(sqlQuery1);      
-       q.setParameter(0, uid);
-       List result=q.list();
-       //String status="";
-       /*for(int i=0;i<result.size();i++)
-       {
-              status=(String)result.get(0);
-              
-       }
-       return status;*/
-     
-       List<status> resultStatusList=q.list();
-       //for(int i=0;i<result.size();i++)
+       Query q1=session.createQuery(sqlQuery1);      
+       q1.setParameter(0, uid);
+       List result=q1.list();
+       List<status> resultStatusList=q1.list();
        status statusObjFirstRecord = resultStatusList.get(0);
-       //for (status statusObj : resultStatusList)
-      // {
        ModelAndView gs = new ModelAndView();
        gs.addObject("appid", statusObjFirstRecord.getapp_id());  
        gs.addObject("appdt", statusObjFirstRecord.getapp_dt());
        gs.addObject("appst", statusObjFirstRecord.getstat());
        
-       System.out.println("Data : " + statusObjFirstRecord.getapp_id() + " "+ statusObjFirstRecord.getapp_dt()  + " " + statusObjFirstRecord.getstat());
-              
-       //}
-       //request.getSession().setAttribute("Status", stat);  
+       
+       System.out.println("Data : " + statusObjFirstRecord.getapp_id() + " "+ statusObjFirstRecord.getapp_dt()  + " " + statusObjFirstRecord.getstat());  
        return gs;
        
         
     }
-
+    
+    
+       public String getAppStatus(String uid)
+    {
+       Session session = hibernateTemplate.getSessionFactory().openSession();
+       String sqlQuery2="from status where uid=? order by app_id desc";
+       Query q2=session.createQuery(sqlQuery2);      
+       q2.setParameter(0, uid);
+       List result=q2.list();
+       List<status> resultStatusList=q2.list();
+       status statusObjFirstRecord = resultStatusList.get(0);
+       String stat = statusObjFirstRecord.getstat();
+       System.out.println(stat);
+       return stat;
+       
+        
+    }
     
     
     

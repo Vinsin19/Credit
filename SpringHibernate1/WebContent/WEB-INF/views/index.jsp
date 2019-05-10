@@ -1,30 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-    <head>        
-        <title>Customer Login</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    </head>
-    <body>
-        <div class="container">
-            <h2 id="form_header" class="text-warning" align="center">AXA BANK</h2>
-            <div> </div>
-     
-            <!-- User input form to validate a user -->
-            <c:url var="validateUrl" value="/user/validate" />
-            <form id="user_form" action="${validateUrl}" method="POST">
-                <div class="form-group">
-                    <label for="name">UID:</label>
-                    <input type="text" class="form-control" id="uid" placeholder="Enter uid" name="uid">
-                </div>
-                <div class="form-group">
-                    <label for="pwd">Password:</label>
-                    <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password">
-                </div>
-                <button id="confirm_user" type="submit" class="btn btn-primary">Login</button>
-            </form>
-        </div>
-    </body>
+<!DOCTYPE html>
+<html lang="en-US" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Customer Login</title>
+<link  rel="stylesheet" href="https://stackp.w3layouts.com/wp-content/themes/w3layouts/css/login_style.css">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400,700,800" rel="stylesheet" type="text/css">
+<link href='//fonts.googleapis.com/css?family=Oxygen:400,700,300' rel='stylesheet' type='text/css'>
+</head>
+<body>
+	<!-- login -->
+		<div class="login-section">
+	        <div class="login">
+				<div class="modal-content modal-info">
+					<div class="modal-header">
+						<h3>AXA Bank</h3>
+					</div>
+					<div class="modal-body modal-spa">
+						<div class="login-form">
+							<form action="validate" method="post">
+								<input type="text" class="user" name="uid" placeholder="Enter UID" required />
+								<input type="password" class="lock" name="password" placeholder="Enter Password" required value="" />
+								<input type="submit" value="Login">
+							</form>
+							<p>New User? <a href="regis">Register Here</a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</body>
 </html>

@@ -19,8 +19,8 @@
       <property name = "first_name" column = "first_name" type = "string"/>
       <property name = "last_name" column = "last_name" type = "string"/>
       <property name = "gender" column = "gender" type = "string"/>
-      <property name = "age" column = "age" type = "int"/>
-      <property name = "contact" column = "contact" type = "long"/>
+      <property name = "age" column = "age" type = "string"/>
+      <property name = "contact" column = "contact" type = "string"/>
       <property name = "sec_que" column = "sec_que" type = "string"/>
       <property name = "sec_ans" column = "sec_ans" type = "string"/>
       

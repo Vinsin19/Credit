@@ -16,15 +16,15 @@
             <form action="validatenewuser" method="POST" modelattribute="newuser">
                 <div class="form-group">
                     <label for="first_name">First Name:</label>
-                    <input type="text" class="form-control" id="first_name" placeholder="Enter First Name" name="first_name">
+                    <input type="text" class="form-control" id="first_name" placeholder="Enter First Name" name="first_name" required>
                 </div>
                 <div class="form-group">
                     <label for="last_name">Last Name:</label>
-                    <input type="text" class="form-control" id="last_name" placeholder="Enter Last Name" name="last_name">
+                    <input type="text" class="form-control" id="last_name" placeholder="Enter Last Name" name="last_name" required>
                 </div>
                 <div class="form-group">
   					<label for="gender">Gender:</label>
-  					<select class="form-control" id="gender" name="gender">
+  					<select class="form-control" id="gender" name="gender" required>
   					<option>Select Option</option>
     				<option value="M">M</option>
     				<option value="F">F</option>
@@ -32,27 +32,27 @@
 				</div>
                 <div class="form-group">
                     <label for="age">Age:</label>
-                    <input type="text" class="form-control" id="age" placeholder="Enter Age" name="age">
+                    <input type="text" class="form-control" id="age" placeholder="Enter Age" name="age" required>
                 </div>
                 <div class="form-group">
                     <label for="contact">Contact Number:</label>
-                    <input type="text" class="form-control" id="contact" placeholder="Enter Contact Number" name="contact">
+                    <input type="text" class="form-control" id="contact" placeholder="Enter Contact Number" name="contact" required>
                 </div>
                  <div class="form-group">
                     <label for="name">UID:</label>
-                    <input type="text" class="form-control" id="uid" placeholder="Enter uid" name="uid">
+                    <input type="text" class="form-control" id="uid" placeholder="Enter uid" name="uid" required>
                 </div>
                 <div class="form-group">
                     <label for="pwd">Password:</label>
-                    <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password">
+                    <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password" required>
                 </div>
                 <div class="form-group">
                     <label for="sec_que">Security Question:</label>
-                    <input type="text" class="form-control" id="sec_que" placeholder="Enter Security Question" name="sec_que">
+                    <input type="text" class="form-control" id="sec_que" placeholder="Enter Security Question" name="sec_que" required>
                 </div>
                 <div class="form-group">
                     <label for="sec_ans">Security Answer:</label>
-                    <input type="text" class="form-control" id="sec_ans" placeholder="Enter Security Answer" name="sec_ans">
+                    <input type="text" class="form-control" id="sec_ans" placeholder="Enter Security Answer" name="sec_ans" required>
                 </div>
                 
                 <button id="Submit_app" type="submit" class="btn btn-primary">Submit</button>

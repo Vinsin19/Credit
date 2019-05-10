@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import com.charan.spring.hibernate.pojo.customer;
 
+import com.charan.spring.hibernate.pojo.customer;
 import com.charan.spring.hibernate.service.AuthUser;
  
 @Component
@@ -21,7 +21,8 @@ public class RegisCntrl {
     private AuthUser authenticateuser;            // This will auto-inject the authentication service into the controller.
  
     private static Logger log = Logger.getLogger(LoginCntrl.class);
- 
+    
+    
     @RequestMapping(value = "/regis")  
     public ModelAndView display(ModelAndView model)  
     {  
@@ -34,10 +35,22 @@ public class RegisCntrl {
     }
                                
     @RequestMapping(value = "/validatenewuser", method = RequestMethod.POST)
-    public String validateNewUsr(@ModelAttribute customer newuser) {
+    public ModelAndView validateNewUsr(@ModelAttribute customer newuser) {
     	System.out.println("in controller");
-        authenticateuser.addUsertodb(newuser);
-        return "first";
+    	ModelAndView alu = new ModelAndView();
+    	String isUser = authenticateuser.addUsertodb(newuser);
         
+    	System.out.println(isUser);
+    	
+        if(isUser.equals("AlUser"))
+    	{
+    		alu.setViewName("exuser");
+        	return alu;
+    	}
+        else
+    	{
+    		alu.setViewName("index");
+    	   	return alu;
+    	}        
    }
  }
